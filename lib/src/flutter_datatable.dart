@@ -1,6 +1,6 @@
 import 'package:adaptivex/adaptivex.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_table/src/utils/utils.dart';
+import 'package:flutter_xtable/src/utils/utils.dart';
 
 import 'models/datatable_header.dart';
 

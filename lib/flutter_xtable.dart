@@ -1,4 +1,4 @@
-library flutter_table;
+library flutter_xtable;
 
 export 'package:adaptivex/adaptivex.dart';
 

@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_table/flutter_table.dart';
+import 'package:flutter_xtable/flutter_xtable.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
