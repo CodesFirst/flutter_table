@@ -1,10 +1,10 @@
 import 'package:adaptivex/adaptivex.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_xtable/src/utils/utils.dart';
+import 'package:xtable/src/utils/utils.dart';
 
 import 'models/datatable_header.dart';
 
-class FlutterDataTable extends StatefulWidget {
+class XDataTable extends StatefulWidget {
   final bool showSelect;
   final List<DatatableHeader> headers;
   final List<Map<String, dynamic>>? source;
@@ -66,7 +66,7 @@ class FlutterDataTable extends StatefulWidget {
   /// allow to styling the selected data row
   final TextStyle? selectedTextStyle;
 
-  const FlutterDataTable({
+  const XDataTable({
     Key? key,
     this.showSelect = false,
     this.onSelectAll,
@@ -104,10 +104,10 @@ class FlutterDataTable extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<FlutterDataTable> createState() => _FlutterDataTableState();
+  State<XDataTable> createState() => _XDataTableState();
 }
 
-class _FlutterDataTableState extends State<FlutterDataTable> {
+class _XDataTableState extends State<XDataTable> {
   Widget mobileHeader() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,

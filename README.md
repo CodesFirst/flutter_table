@@ -22,7 +22,7 @@ Responsive Data table is a highly flexible tool built upon the foundations of pr
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_xtable/flutter_xtable.dart';
+import 'package:xtable/xtable.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -252,7 +252,7 @@ class _DataPageState extends State<DataPage> {
             elevation: 1,
             shadowColor: Colors.black,
             clipBehavior: Clip.none,
-            child: FlutterDataTable(
+            child: XDataTable(
               title: TextButton.icon(
                 onPressed: () => {},
                 icon: Icon(Icons.add),
