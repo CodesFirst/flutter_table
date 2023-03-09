@@ -50,4 +50,9 @@ class DatatableHeader {
       };
 }
 
-enum DataTableFormat { normal, date, time }
+enum DataTableFormat {
+  normal,
+  date,
+  time,
+  number,
+}

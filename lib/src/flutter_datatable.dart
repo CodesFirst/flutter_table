@@ -552,6 +552,8 @@ class TextEditableWidget extends StatelessWidget {
       padding: const EdgeInsets.all(0),
       margin: const EdgeInsets.all(0),
       child: TextField(
+        keyboardType:
+            format == DataTableFormat.number ? TextInputType.number : null,
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.all(0),
           border: hideUnderline
