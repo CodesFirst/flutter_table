@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:xtable/xtable.dart';
 
 class UtilTable {
-  static void selectDate(
-    BuildContext context,
+  static void selectDate({
+    required BuildContext context,
+    required Map<String, dynamic> data,
+    required DatatableHeader header,
+    Function(Map<String, dynamic> vaue, DatatableHeader header)? onChanged,
     TextEditingController? controller,
-  ) async {
+  }) async {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(), // Refer step 1
@@ -14,20 +18,30 @@ class UtilTable {
     );
 
     if (picked == null) return;
-    controller?.text = DateFormat('dd-MM-yyyy').format(picked);
+    final newValue = DateFormat('dd-MM-yyyy').format(picked);
+    controller?.text = newValue;
+    data[header.value] = newValue;
+    onChanged?.call(data, header);
   }
 
-  static void selectTime(
-    BuildContext context,
+  static void selectTime({
+    required BuildContext context,
+    required Map<String, dynamic> data,
+    required DatatableHeader header,
+    Function(Map<String, dynamic> vaue, DatatableHeader header)? onChanged,
     TextEditingController? controller,
-  ) async {
+  }) async {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
     );
     if (picked == null) return;
-    final formatTime = formatTimeOfDay(picked);
-    controller?.text = formatTime;
+    final newValue = formatTimeOfDay(picked);
+    controller?.text = newValue;
+
+    controller?.text = newValue;
+    data[header.value] = newValue;
+    onChanged?.call(data, header);
   }
 
   /// `formatTimeOfDay`

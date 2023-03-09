@@ -218,7 +218,6 @@ class _XDataTableState extends State<XDataTable> {
                                         onChanged: widget.onChangedRow,
                                         onSubmitted: widget.onSubmittedRow,
                                         hideUnderline: widget.hideUnderline,
-                                        format: header.format,
                                       )
                                     : Text(
                                         "${data[header.value]}",
@@ -363,7 +362,6 @@ class _XDataTableState extends State<XDataTable> {
                                       onChanged: widget.onChangedRow,
                                       onSubmitted: widget.onSubmittedRow,
                                       hideUnderline: widget.hideUnderline,
-                                      format: header.format,
                                     )
                                   : Text(
                                       "${data[header.value]}",
@@ -515,11 +513,6 @@ class TextEditableWidget extends StatelessWidget {
   /// allow use to decorate hideUnderline false or true
   final bool hideUnderline;
 
-  /// `format`
-  ///
-  /// allow use format input
-  final DataTableFormat format;
-
   /// `onChanged`
   ///
   /// trigger the call back update when user make any text change
@@ -535,7 +528,6 @@ class TextEditableWidget extends StatelessWidget {
     Key? key,
     required this.data,
     required this.header,
-    required this.format,
     this.textAlign = TextAlign.center,
     this.hideUnderline = false,
     this.onChanged,
@@ -552,8 +544,9 @@ class TextEditableWidget extends StatelessWidget {
       padding: const EdgeInsets.all(0),
       margin: const EdgeInsets.all(0),
       child: TextField(
-        keyboardType:
-            format == DataTableFormat.number ? TextInputType.number : null,
+        keyboardType: header.format == DataTableFormat.number
+            ? TextInputType.number
+            : null,
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.all(0),
           border: hideUnderline
@@ -567,14 +560,26 @@ class TextEditableWidget extends StatelessWidget {
           data[header.value] = newValue;
           onChanged?.call(data, header);
         },
-        readOnly:
-            format == DataTableFormat.date || format == DataTableFormat.time
-                ? true
-                : false,
-        onTap: format == DataTableFormat.date
-            ? () => UtilTable.selectDate(context, controller)
-            : format == DataTableFormat.time
-                ? () => UtilTable.selectTime(context, controller)
+        readOnly: header.format == DataTableFormat.date ||
+                header.format == DataTableFormat.time
+            ? true
+            : false,
+        onTap: header.format == DataTableFormat.date
+            ? () => UtilTable.selectDate(
+                  context: context,
+                  data: data,
+                  header: header,
+                  controller: controller,
+                  onChanged: onChanged,
+                )
+            : header.format == DataTableFormat.time
+                ? () => UtilTable.selectTime(
+                      context: context,
+                      data: data,
+                      header: header,
+                      controller: controller,
+                      onChanged: onChanged,
+                    )
                 : null,
         onSubmitted: (x) => onSubmitted?.call(data, header),
       ),
