@@ -4,7 +4,7 @@ Original repository: https://github.com/kechankrisna/flutter_responsive_table
 
 The problem with the original repository is that it has not been updated since 2021, for this reason this repository was created in order to maintain an updated code and eliminate the warning message when compiling a flutter application.
 
-# flutter_table
+# xtable
 
 Responsive Data table is a highly flexible tool built upon the foundations of progressive enhancement, that adds all of these advanced features to any flutter table.
 

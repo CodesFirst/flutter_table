@@ -219,11 +219,15 @@ class _XDataTableState extends State<XDataTable> {
                                         onSubmitted: widget.onSubmittedRow,
                                         hideUnderline: widget.hideUnderline,
                                       )
-                                    : Text(
-                                        "${data[header.value]}",
-                                        style: widget.selecteds!.contains(data)
-                                            ? widget.selectedTextStyle
-                                            : widget.rowTextStyle,
+                                    : Expanded(
+                                        child: Text(
+                                          "${data[header.value]}",
+                                          textAlign: header.textAlign,
+                                          style:
+                                              widget.selecteds!.contains(data)
+                                                  ? widget.selectedTextStyle
+                                                  : widget.rowTextStyle,
+                                        ),
                                       )
                           ],
                         ),

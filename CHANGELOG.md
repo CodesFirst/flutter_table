@@ -5,3 +5,7 @@
 ## 0.0.2
 
 - fix format time and date
+
+## 0.0.3
+
+- fix horizontal text not editable
