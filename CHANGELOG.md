@@ -9,3 +9,7 @@
 ## 0.0.3
 
 - fix horizontal text not editable
+
+## 0.0.4
+
+- add format list

@@ -135,7 +135,16 @@ class _DataPageState extends State<DataPage> {
 
     /// set headers
     _headers = [
-      DatatableHeader(text: "ID", value: "id", show: true, sortable: true, textAlign: TextAlign.center),
+      DatatableHeader(
+        text: "ID",
+        value: "id",
+        show: true,
+        sortable: true,
+        textAlign: TextAlign.center,
+        format: DataTableFormat.list,
+        items: ['1', '2'],
+        editable: true,
+      ),
       DatatableHeader(
         text: "Name",
         value: "name",

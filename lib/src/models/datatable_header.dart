@@ -12,6 +12,7 @@ class DatatableHeader {
   final Widget Function(dynamic value, Map<String?, dynamic> row)?
       sourceBuilder;
   final DataTableFormat format;
+  final List<String> items;
 
   DatatableHeader({
     required this.text,
@@ -24,6 +25,7 @@ class DatatableHeader {
     this.format = DataTableFormat.normal,
     this.headerBuilder,
     this.sourceBuilder,
+    this.items = const [],
   });
 
   factory DatatableHeader.fromMap(Map<String, dynamic> map) => DatatableHeader(
@@ -36,6 +38,7 @@ class DatatableHeader {
         headerBuilder: map['headerBuilder'],
         sourceBuilder: map['sourceBuilder'],
         format: map['format'],
+        items: map['items'] ?? [],
       );
   Map<String, dynamic> toMap() => {
         "text": text,
@@ -47,6 +50,7 @@ class DatatableHeader {
         "headerBuilder": headerBuilder,
         "sourceBuilder": sourceBuilder,
         "format": format,
+        "items": items,
       };
 }
 
@@ -55,4 +59,5 @@ enum DataTableFormat {
   date,
   time,
   number,
+  list,
 }

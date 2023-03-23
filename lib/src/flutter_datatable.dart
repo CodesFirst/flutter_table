@@ -543,49 +543,106 @@ class TextEditableWidget extends StatelessWidget {
     final controller = TextEditingController.fromValue(
       TextEditingValue(text: "${data[header.value]}"),
     );
+    return header.format == DataTableFormat.list
+        ? DropdownFieldWidget(
+            controller: controller,
+            data: data,
+            elements: header.items,
+            header: header,
+            func: onChanged,
+          )
+        : Container(
+            constraints: const BoxConstraints(maxWidth: 150),
+            padding: const EdgeInsets.all(0),
+            margin: const EdgeInsets.all(0),
+            child: TextField(
+              keyboardType: header.format == DataTableFormat.number
+                  ? TextInputType.number
+                  : null,
+              decoration: InputDecoration(
+                contentPadding: const EdgeInsets.all(0),
+                border: hideUnderline
+                    ? InputBorder.none
+                    : const UnderlineInputBorder(
+                        borderSide: BorderSide(width: 1)),
+                alignLabelWithHint: true,
+              ),
+              textAlign: textAlign,
+              controller: controller,
+              onChanged: (newValue) {
+                data[header.value] = newValue;
+                onChanged?.call(data, header);
+              },
+              readOnly: header.format == DataTableFormat.date ||
+                      header.format == DataTableFormat.time
+                  ? true
+                  : false,
+              onTap: header.format == DataTableFormat.date
+                  ? () => UtilTable.selectDate(
+                        context: context,
+                        data: data,
+                        header: header,
+                        controller: controller,
+                        onChanged: onChanged,
+                      )
+                  : header.format == DataTableFormat.time
+                      ? () => UtilTable.selectTime(
+                            context: context,
+                            data: data,
+                            header: header,
+                            controller: controller,
+                            onChanged: onChanged,
+                          )
+                      : null,
+              onSubmitted: (x) => onSubmitted?.call(data, header),
+            ),
+          );
+  }
+}
+
+class DropdownFieldWidget extends StatelessWidget {
+  const DropdownFieldWidget({
+    Key? key,
+    required this.controller,
+    required this.elements,
+    required this.data,
+    required this.header,
+    this.func,
+  }) : super(key: key);
+  final TextEditingController controller;
+  final List<String> elements;
+  final Map<String, dynamic> data;
+  final DatatableHeader header;
+  final Function(Map<String, dynamic> vaue, DatatableHeader header)? func;
+  @override
+  Widget build(BuildContext context) {
     return Container(
       constraints: const BoxConstraints(maxWidth: 150),
       padding: const EdgeInsets.all(0),
       margin: const EdgeInsets.all(0),
-      child: TextField(
-        keyboardType: header.format == DataTableFormat.number
-            ? TextInputType.number
-            : null,
-        decoration: InputDecoration(
-          contentPadding: const EdgeInsets.all(0),
-          border: hideUnderline
-              ? InputBorder.none
-              : const UnderlineInputBorder(borderSide: BorderSide(width: 1)),
-          alignLabelWithHint: true,
-        ),
-        textAlign: textAlign,
-        controller: controller,
-        onChanged: (newValue) {
-          data[header.value] = newValue;
-          onChanged?.call(data, header);
+      child: DropdownButtonFormField<String>(
+        hint: Text(controller.text),
+        // decoration: const InputDecoration(
+        //   enabledBorder: OutlineInputBorder(
+        //     borderSide: BorderSide(color: Colors.blueAccent, width: 0.0),
+        //   ),
+        //   border: OutlineInputBorder(borderSide: BorderSide(color: ColorTablet.lightBlueColor)),
+        // ),
+        items: elements.map(
+          (val) {
+            return DropdownMenuItem<String>(
+              value: val,
+              child: Text(val),
+            );
+          },
+        ).toList(),
+        onChanged: (value) {
+          if (value != null) {
+            controller.text = value;
+            data[header.value] = value;
+            func?.call(data, header);
+          }
         },
-        readOnly: header.format == DataTableFormat.date ||
-                header.format == DataTableFormat.time
-            ? true
-            : false,
-        onTap: header.format == DataTableFormat.date
-            ? () => UtilTable.selectDate(
-                  context: context,
-                  data: data,
-                  header: header,
-                  controller: controller,
-                  onChanged: onChanged,
-                )
-            : header.format == DataTableFormat.time
-                ? () => UtilTable.selectTime(
-                      context: context,
-                      data: data,
-                      header: header,
-                      controller: controller,
-                      onChanged: onChanged,
-                    )
-                : null,
-        onSubmitted: (x) => onSubmitted?.call(data, header),
       ),
     );
   }
