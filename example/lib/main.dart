@@ -142,7 +142,7 @@ class _DataPageState extends State<DataPage> {
         sortable: true,
         textAlign: TextAlign.center,
         format: DataTableFormat.list,
-        items: ['1', '2'],
+        items: ['1dasdasdasdasdasdasdasdasdas asdasdasd adasdasd asdasdasdas', '2'],
         editable: true,
       ),
       DatatableHeader(
@@ -231,9 +231,9 @@ class _DataPageState extends State<DataPage> {
       body: SingleChildScrollView(
           child: Column(mainAxisAlignment: MainAxisAlignment.start, mainAxisSize: MainAxisSize.max, children: [
         Container(
-          margin: EdgeInsets.all(10),
-          padding: EdgeInsets.all(0),
-          constraints: BoxConstraints(
+          margin: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(0),
+          constraints: const BoxConstraints(
             maxHeight: 700,
           ),
           child: Card(
@@ -241,10 +241,11 @@ class _DataPageState extends State<DataPage> {
             shadowColor: Colors.black,
             clipBehavior: Clip.none,
             child: XDataTable(
+              timeToSubtract: const Duration(days: 6),
               title: TextButton.icon(
                 onPressed: () => {},
-                icon: Icon(Icons.add),
-                label: Text("new item"),
+                icon: const Icon(Icons.add),
+                label: const Text("new item"),
               ),
               reponseScreenSizes: [ScreenSize.xs],
               actions: [
@@ -252,7 +253,7 @@ class _DataPageState extends State<DataPage> {
                   Expanded(
                       child: TextField(
                     decoration: InputDecoration(
-                        hintText: 'Enter search term based on ' + _searchKey!.replaceAll(new RegExp('[\\W_]+'), ' ').toUpperCase(),
+                        hintText: 'Enter search term based on ${_searchKey!.replaceAll(RegExp('[\\W_]+'), ' ').toUpperCase()}',
                         prefixIcon: IconButton(
                             icon: Icon(Icons.cancel),
                             onPressed: () {

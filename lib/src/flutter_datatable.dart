@@ -66,6 +66,11 @@ class XDataTable extends StatefulWidget {
   /// allow to styling the selected data row
   final TextStyle? selectedTextStyle;
 
+  ///`timeToSubtract`
+  ///
+  /// is the time that is restored to the start date in the date inputs
+  final Duration timeToSubtract;
+
   const XDataTable({
     Key? key,
     this.showSelect = false,
@@ -101,6 +106,7 @@ class XDataTable extends StatefulWidget {
     this.headerTextStyle,
     this.rowTextStyle,
     this.selectedTextStyle,
+    this.timeToSubtract = const Duration(seconds: 0),
   }) : super(key: key);
 
   @override
@@ -218,6 +224,7 @@ class _XDataTableState extends State<XDataTable> {
                                         onChanged: widget.onChangedRow,
                                         onSubmitted: widget.onSubmittedRow,
                                         hideUnderline: widget.hideUnderline,
+                                        timeToSubtract: widget.timeToSubtract,
                                       )
                                     : Expanded(
                                         child: Text(
@@ -366,6 +373,7 @@ class _XDataTableState extends State<XDataTable> {
                                       onChanged: widget.onChangedRow,
                                       onSubmitted: widget.onSubmittedRow,
                                       hideUnderline: widget.hideUnderline,
+                                      timeToSubtract: widget.timeToSubtract,
                                     )
                                   : Text(
                                       "${data[header.value]}",
@@ -528,10 +536,16 @@ class TextEditableWidget extends StatelessWidget {
   final Function(Map<String, dynamic> vaue, DatatableHeader header)?
       onSubmitted;
 
+  ///`timeToSubtract`
+  ///
+  /// is the time that is restored to the start date in the date inputs
+  final Duration timeToSubtract;
+
   const TextEditableWidget({
     Key? key,
     required this.data,
     required this.header,
+    required this.timeToSubtract,
     this.textAlign = TextAlign.center,
     this.hideUnderline = false,
     this.onChanged,
@@ -579,12 +593,12 @@ class TextEditableWidget extends StatelessWidget {
                   : false,
               onTap: header.format == DataTableFormat.date
                   ? () => UtilTable.selectDate(
-                        context: context,
-                        data: data,
-                        header: header,
-                        controller: controller,
-                        onChanged: onChanged,
-                      )
+                      context: context,
+                      data: data,
+                      header: header,
+                      controller: controller,
+                      onChanged: onChanged,
+                      timeToSubtract: timeToSubtract)
                   : header.format == DataTableFormat.time
                       ? () => UtilTable.selectTime(
                             context: context,
@@ -621,6 +635,7 @@ class DropdownFieldWidget extends StatelessWidget {
       padding: const EdgeInsets.all(0),
       margin: const EdgeInsets.all(0),
       child: DropdownButtonFormField<String>(
+        isExpanded: true,
         hint: Text(controller.text),
         // decoration: const InputDecoration(
         //   enabledBorder: OutlineInputBorder(

@@ -1,11 +1,11 @@
 name: xtable
 description: Responsive Data table is a highly flexible tool built upon the foundations of progressive enhancement, that adds all of these advanced features to any flutter table.
-version: 0.0.4
+version: 0.0.6
 homepage: https://github.com/CodesFirst/flutter_table
 
 environment:
-  sdk: '>=2.19.2 <3.0.0'
-  flutter: ">=1.17.0"
+  sdk: '>=3.0.2 <4.0.0'
+  flutter: ">=3.10.0"
 
 dependencies:
   flutter:
