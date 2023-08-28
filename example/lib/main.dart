@@ -162,6 +162,7 @@ class _DataPageState extends State<DataPage> {
         sortable: true,
         textAlign: TextAlign.center,
         editable: true,
+        format: DataTableFormat.number,
       ),
       DatatableHeader(text: "Category", value: "category", show: true, sortable: true, textAlign: TextAlign.left),
       DatatableHeader(text: "Price", value: "price", show: true, sortable: true, textAlign: TextAlign.left),

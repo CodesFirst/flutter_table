@@ -572,7 +572,9 @@ class TextEditableWidget extends StatelessWidget {
             child: TextField(
               keyboardType: header.format == DataTableFormat.number
                   ? TextInputType.number
-                  : null,
+                  : header.format == DataTableFormat.numberWithDecimal
+                      ? const TextInputType.numberWithOptions(decimal: true)
+                      : null,
               decoration: InputDecoration(
                 contentPadding: const EdgeInsets.all(0),
                 border: hideUnderline
@@ -588,6 +590,7 @@ class TextEditableWidget extends StatelessWidget {
                 onChanged?.call(data, header);
               },
               readOnly: header.format == DataTableFormat.date ||
+                      header.format == DataTableFormat.dateTime ||
                       header.format == DataTableFormat.time
                   ? true
                   : false,
@@ -607,7 +610,16 @@ class TextEditableWidget extends StatelessWidget {
                             controller: controller,
                             onChanged: onChanged,
                           )
-                      : null,
+                      : header.format == DataTableFormat.dateTime
+                          ? () => UtilTable.showDateTimePicker(
+                                context: context,
+                                data: data,
+                                header: header,
+                                controller: controller,
+                                onChanged: onChanged,
+                                timeToSubtract: timeToSubtract,
+                              )
+                          : null,
               onSubmitted: (x) => onSubmitted?.call(data, header),
             ),
           );

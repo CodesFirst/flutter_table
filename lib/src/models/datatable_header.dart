@@ -58,6 +58,8 @@ enum DataTableFormat {
   normal,
   date,
   time,
+  dateTime,
   number,
+  numberWithDecimal,
   list,
 }

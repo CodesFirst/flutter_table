@@ -21,3 +21,15 @@
 ## 0.0.6
 
 - add `isExpanded` in DropdownButtonFormField
+
+## 0.0.7
+
+- add `datetime` in DataTableFormat
+
+## 0.0.8
+
+- add `readonly` in DataTableFormat type datetime
+
+## 0.0.9
+
+- add `numberWithDecimal` in DataTableFormat
