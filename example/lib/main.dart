@@ -146,15 +146,7 @@ class _DataPageState extends State<DataPage> {
         editable: true,
       ),
       DatatableHeader(
-        text: "Name",
-        value: "name",
-        show: true,
-        flex: 2,
-        sortable: true,
-        editable: true,
-        textAlign: TextAlign.left,
-        format: DataTableFormat.date,
-      ),
+          text: "Name", value: "name", show: true, flex: 2, sortable: true, editable: true, textAlign: TextAlign.left, format: DataTableFormat.number, textInputFormatter: []),
       DatatableHeader(
         text: "SKU",
         value: "sku",

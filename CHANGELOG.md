@@ -33,3 +33,7 @@
 ## 0.0.9
 
 - add `numberWithDecimal` in DataTableFormat
+
+## 0.0.10
+
+- remove `numberWithDecimal` in DataTableFormat. but add List<TextInputFormatter> any format.

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class DatatableHeader {
   final String text;
@@ -13,6 +14,7 @@ class DatatableHeader {
       sourceBuilder;
   final DataTableFormat format;
   final List<String> items;
+  final List<TextInputFormatter>? textInputFormatter;
 
   DatatableHeader({
     required this.text,
@@ -26,6 +28,7 @@ class DatatableHeader {
     this.headerBuilder,
     this.sourceBuilder,
     this.items = const [],
+    this.textInputFormatter,
   });
 
   factory DatatableHeader.fromMap(Map<String, dynamic> map) => DatatableHeader(
@@ -51,6 +54,7 @@ class DatatableHeader {
         "sourceBuilder": sourceBuilder,
         "format": format,
         "items": items,
+        "textInputFormatter": textInputFormatter,
       };
 }
 
@@ -60,6 +64,5 @@ enum DataTableFormat {
   time,
   dateTime,
   number,
-  numberWithDecimal,
   list,
 }
