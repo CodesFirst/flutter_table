@@ -23,7 +23,8 @@ class XDataTable extends StatefulWidget {
   final bool hideUnderline;
   final bool commonMobileView;
   final bool isExpandRows;
-
+  final String? sortText;
+  final bool showSort;
   final List<bool>? expanded;
   final Widget Function(Map<String, dynamic> value)? dropContainer;
   final Function(Map<String, dynamic> value, DatatableHeader header)?
@@ -78,6 +79,8 @@ class XDataTable extends StatefulWidget {
     this.onSelect,
     this.onTabRow,
     this.onSort,
+    this.sortText = 'SORT BY',
+    this.showSort = false,
     this.headers = const [],
     this.source,
     this.selecteds,
@@ -114,52 +117,59 @@ class XDataTable extends StatefulWidget {
 }
 
 class _XDataTableState extends State<XDataTable> {
-  Widget mobileHeader() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Checkbox(
-          value: widget.selecteds!.length == widget.source!.length &&
-              widget.source != null &&
-              widget.source!.isNotEmpty,
-          onChanged: (value) {
-            if (widget.onSelectAll != null) widget.onSelectAll!(value);
-          },
-        ),
-        PopupMenuButton(
-          tooltip: "SORT BY",
-          initialValue: widget.sortColumn,
-          itemBuilder: (_) => widget.headers
-              .where((header) => header.show == true && header.sortable == true)
-              .toList()
-              .map((header) => PopupMenuItem(
-                    value: header.value,
-                    child: Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      children: [
-                        Text(
-                          header.text,
-                          textAlign: header.textAlign,
+  Widget mobileHeader({required showSelect, required showSort}) {
+    if (showSelect || showSort) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          if (showSelect)
+            Checkbox(
+              value: widget.selecteds!.length == widget.source!.length &&
+                  widget.source != null &&
+                  widget.source!.isNotEmpty,
+              onChanged: (value) {
+                if (widget.onSelectAll != null) widget.onSelectAll!(value);
+              },
+            ),
+          if (showSort)
+            PopupMenuButton(
+              tooltip: widget.sortText,
+              initialValue: widget.sortColumn,
+              itemBuilder: (_) => widget.headers
+                  .where((header) =>
+                      header.show == true && header.sortable == true)
+                  .toList()
+                  .map((header) => PopupMenuItem(
+                        value: header.value,
+                        child: Wrap(
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            Text(
+                              header.text,
+                              textAlign: header.textAlign,
+                            ),
+                            if (widget.sortColumn != null &&
+                                widget.sortColumn == header.value)
+                              widget.sortAscending!
+                                  ? const Icon(Icons.arrow_downward, size: 15)
+                                  : const Icon(Icons.arrow_upward, size: 15)
+                          ],
                         ),
-                        if (widget.sortColumn != null &&
-                            widget.sortColumn == header.value)
-                          widget.sortAscending!
-                              ? const Icon(Icons.arrow_downward, size: 15)
-                              : const Icon(Icons.arrow_upward, size: 15)
-                      ],
-                    ),
-                  ))
-              .toList(),
-          onSelected: (dynamic value) {
-            if (widget.onSort != null) widget.onSort!(value);
-          },
-          child: Container(
-            padding: const EdgeInsets.all(15),
-            child: const Text("SORT BY"),
-          ),
-        )
-      ],
-    );
+                      ))
+                  .toList(),
+              onSelected: (dynamic value) {
+                if (widget.onSort != null) widget.onSort!(value);
+              },
+              child: Container(
+                padding: const EdgeInsets.all(15),
+                child: Text(widget.sortText ?? "SORT BY"),
+              ),
+            )
+        ],
+      );
+    } else {
+      return const SizedBox.shrink();
+    }
   }
 
   List<Widget> mobileList() {
@@ -428,8 +438,10 @@ class _XDataTableState extends State<XDataTable> {
               if (widget.autoHeight)
                 Column(
                   children: [
-                    if (widget.showSelect && widget.selecteds != null)
-                      mobileHeader(),
+                      mobileHeader(
+                        showSelect: (widget.showSelect && widget.selecteds != null), 
+                        showSort: (widget.showSort && widget.onSort!=null)
+                        ),
                     if (widget.isLoading) const LinearProgressIndicator(),
                     ...mobileList(),
                   ],
@@ -439,8 +451,10 @@ class _XDataTableState extends State<XDataTable> {
                   child: ListView(
                     /// itemCount: source.length,
                     children: [
-                      if (widget.showSelect && widget.selecteds != null)
-                        mobileHeader(),
+                       mobileHeader(
+                        showSelect: (widget.showSelect && widget.selecteds != null), 
+                        showSort: (widget.showSort && widget.onSort!=null)
+                        ),
                       if (widget.isLoading) const LinearProgressIndicator(),
 
                       /// mobileList
